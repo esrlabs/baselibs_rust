@@ -42,7 +42,7 @@ package log <<component>> {
         +mw_log_format_args_nl!(format_string: &str, args...) : Arguments<'_>
     }
 
-    package "mw_log_fmt" {
+    package mw_log_fmt {
         +interface ScoreDebug <<trait>> {
             +fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) : Result
         }

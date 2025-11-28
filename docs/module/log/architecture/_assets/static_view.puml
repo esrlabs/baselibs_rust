@@ -12,9 +12,10 @@ package "log" <<component>> {
 }
 
 component "mw_log_subscriber" <<component>>
-note bottom: "Backend implementation."
+note bottom
+    Backend implementation.
+end note
 
-mw_log --> "mw_log_subscriber" : implements
-
+mw_log --> mw_log_subscriber : implements
 
 @enduml

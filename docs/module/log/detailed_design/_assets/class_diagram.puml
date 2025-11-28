@@ -1,7 +1,10 @@
 @startuml class_diagram
 
 package "mw_log crate" {
-    note "Implementation of logging front-end.\nBased on 'log' library." as mw_log_desc
+    note as mw_log_desc
+        Implementation of logging front-end.
+        Based on 'log' library.
+    end note
 
     +interface Log <<trait>> {
         +enabled(&self, metadata: &Metadata<_>) : bool
@@ -76,7 +79,23 @@ package "mw_log crate" {
         +trace!(...) : ()
     }
 
-    note top: "Functions are used for global logger configuration.\n\n```rust\nlet logger = &ExampleLogger;\nset_logger(logger).unwrap();\nset_max_level(LevelFilter::Fatal);\n```\n\nMacros are used for logging.\n\n```rust\nlog!(logger: logger_instance, Level::Fatal, "FATAL");\ninfo!("INFO: {}", i);\nerror!(logger: logger_instance, "ERROR: {}", true);\n```\n"
+    note top
+        Functions are used for global logger configuration.
+
+        <code>
+        let logger = &ExampleLogger;
+        set_logger(logger).unwrap();
+        set_max_level(LevelFilter::Fatal);
+        </code>
+
+        Macros are used for logging. Examples:
+
+        <code>
+        log!(logger: logger_instance, Level::Fatal, "FATAL");
+        info!("INFO: {}", i);
+        error!(logger: logger_instance, "ERROR: {}", true);
+        </code>
+    end note
 
     mw_log -- Log
     mw_log -- Level
@@ -84,7 +103,10 @@ package "mw_log crate" {
 }
 
 package "mw_log_fmt crate" {
-    note "Formatting interface, similar to 'std::fmt'.\nExpanded with support for non-string variables." as mw_log_fmt_desc
+    note as mw_log_fmt_desc
+        Formatting interface, similar to 'std::fmt'.
+        Expanded with support for non-string variables.
+    end note
 
     +interface ScoreWrite <<trait>> {
         +write_bool(&mut self, v: &bool, spec: &FormatSpec) : Result
@@ -182,7 +204,22 @@ package "mw_log_fmt crate" {
         +score_write!(format_string: &str, args...) : Result
         +score_writeln!(format_string: &str, args...) : Result
     }
-    note top: "Provided macros can be used for implementing custom formatting traits.\n'''rust\nstruct Point {\n    x: i32,\n    y: i32,\n}\n\nimpl ScoreDebug for Point {\n    fn fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) -> Result {\n        score_write!(f, "[{}, {}]", self.x, self.y)\n    }\n}\n'''"
+    note top
+        Provided macros can be used for implementing custom formatting traits.
+
+        <code>
+        struct Point {
+            x: i32,
+            y: i32,
+        }
+
+        impl ScoreDebug for Point {
+            fn fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) -> Result {
+                score_write!(f, "[{}, {}]", self.x, self.y)
+            }
+        }
+        </code>
+    end note
 
     mw_log_fmt -- Arguments
 }
@@ -193,11 +230,16 @@ package "mw_log_macro crate" {
         +mw_log_format_args_nl!(format_string: &str, args...) : Arguments<'_>
     }
 
-    note top: "Procedural macro crate containing custom 'format_args' implementation, normally provided by Rust compiler.\nUsed by format string processing macros. Connections omitted for clarity."
+    note top
+        Procedural macro crate containing custom 'format_args' implementation, normally provided by Rust compiler.
+        Used by format string processing macros. Connections omitted for clarity.
+    end note
 }
 
 package "mw_log_subscriber crate" {
-    note "Example of backend implementation." as mw_log_subscriber_desc
+    note as mw_log_subscriber_desc
+        Example of backend implementation.
+    end note
 
     +class ExampleLog <<struct>> {
         +enabled(&self, metadata: &Metadata<_>) : bool
