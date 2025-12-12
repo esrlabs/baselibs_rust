@@ -110,5 +110,8 @@
     "rust-analyzer.cargo.cfgs": [
         "!miri"
     ],
-    "rust-analyzer.check.command": "clippy"
+    "rust-analyzer.check.command": "clippy",
+    "rust-analyzer.rustfmt.overrideCommand": [
+        "${workspaceFolder}/.vscode/rustfmt.sh"
+    ]
 }
